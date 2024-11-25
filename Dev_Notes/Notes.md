@@ -80,3 +80,23 @@ Set the working directory to the project root not the executable root
 Instead of freerdp-proxy use redemption as a base, note to compile bjam might not be available, just use b2, instead of hyperscan use vectorscan (provides same include files)
 
 Too complicated -> doesn't work for some reason, can connect by setting RemoteFX but black screen
+
+# WSLg
+
+Apparently Microsoft uses this exact thing for WSLg,
+
+It also fixes Weston crashing on RDP disconnect:
+
+![Fix Crash](https://github.com/microsoft/weston-mirror/commit/197762e1f910161143ba36755b08f348d779d6e8)
+
+## FreeRDP
+
+### Compilation issues:
+
+On working branch as of 25/11/2024
+
+`AV_CODEC_CAP_TRUNCATED` is not defined
+
+`AV_CODEC_FLAG_TRUNCATED` is not defined
+
+Fixed with: ![https://github.com/FreeRDP/FreeRDP/pull/8690/commits/b2e33c7ddb1fe0204aaa6ecb27affbcaa6b22718](https://github.com/FreeRDP/FreeRDP/pull/8690/commits/b2e33c7ddb1fe0204aaa6ecb27affbcaa6b22718)

@@ -1,0 +1,35 @@
+services:
+  weston:
+    image: your-weston-image:latest  # Replace with the actual Weston-compatible image
+    container_name: weston-${USERNAME}
+    # Run as a user specified by environment variables
+    user: "${WESTON_USER_ID}:${WESTON_GROUP_ID}"
+    
+    # Mount host access files as read-only
+    volumes:
+      - /etc/passwd:/etc/passwd:ro
+      - /etc/group:/etc/group:ro
+      
+      # Mount the /etc/weston directory from the host to the container
+      - /etc/weston:/etc/weston:ro
+      
+    # Set environment variables if needed (e.g., XDG_RUNTIME_DIR for wayland compositors)
+    environment:
+      # Add other environment variables as required
+
+    # Command to run Weston
+    command: weston
+
+    # Optional: Restart policy
+    restart: unless-stopped
+
+    # Use init system
+    init: true
+
+    # Optional: Network settings
+    # network_mode: host
+
+    # Optional: Security settings
+    # security_opt:
+    #   - label=disable
+
