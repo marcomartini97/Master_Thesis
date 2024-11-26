@@ -1,35 +1,46 @@
 services:
-  weston:
-    image: your-weston-image:latest  # Replace with the actual Weston-compatible image
-    container_name: weston-${USERNAME}
-    # Run as a user specified by environment variables
-    user: "${WESTON_USER_ID}:${WESTON_GROUP_ID}"
-    
-    # Mount host access files as read-only
+  weston-composer:
+    image: weston-vdi-nvidia
+    container_name: weston-$USERNAME
+    # Use systemd as the entrypoint
+    command: /usr/sbin/init
+    # Set environment variable to indicate containerization
+    environment:
+      - XDG_RUNTIME_DIR=/tmp
+      - USERNAME=$USERNAME
+    # Mount cgroups and necessary filesystems
     volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /tmp/dbus:/var/run/dbus
       - /etc/passwd:/etc/passwd:ro
       - /etc/group:/etc/group:ro
-      
+#      - /dev/dri:/dev/dri:rw
+      - /dev/nvidia0:/dev/nvidia0  # Pass the primary NVIDIA GPU device
+      - /dev/nvidiactl:/dev/nvidiactl  # Control device for NVIDIA driver
+      - /dev/nvidia-uvm:/dev/nvidia-uvm  # UVM device for memory management
+      - /dev/nvidia-modeset:/dev/nvidia-modeset  # Modeset device
+      - /dev/dri/renderD128:/dev/dri/renderD128
+    # Remove after tests
+      - /home/marco:/mnt/home/marco
+
+
       # Mount the /etc/weston directory from the host to the container
       - /etc/weston:/etc/weston:ro
-      
-    # Set environment variables if needed (e.g., XDG_RUNTIME_DIR for wayland compositors)
-    environment:
-      # Add other environment variables as required
 
-    # Command to run Weston
-    command: weston
-
-    # Optional: Restart policy
+    # Add specific capabilities required by systemd
+    cap_add:
+      - SYS_ADMIN
+      - NET_ADMIN
+      - SYS_PTRACE
+      - AUDIT_CONTROL
+    # Security options to relax certain restrictions
+    security_opt:
+      - seccomp=unconfined
+      - label=disable
+    # Ensure systemd has access to necessary devices
+    devices:
+      - /dev/fuse
+    # Restart policy
     restart: unless-stopped
-
-    # Use init system
-    init: true
-
-    # Optional: Network settings
-    # network_mode: host
-
-    # Optional: Security settings
-    # security_opt:
-    #   - label=disable
-
+    # Optional: set hostname
+    hostname: weston-$USERNAME
