@@ -1,0 +1,12 @@
+[Unit]
+Description=Weston Compositor
+After=multi-user.target
+Wants=multi-user.target
+
+[Service]
+Environment="USERNAME=${USERNAME}"
+ExecStart=/bin/start_weston.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
