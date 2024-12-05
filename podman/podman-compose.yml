@@ -1,6 +1,6 @@
 services:
   weston-composer:
-    image: weston-vdi-nvidia
+    image: fedora_dev
     container_name: weston-$USERNAME
     # Use systemd as the entrypoint
     command: /usr/sbin/init
