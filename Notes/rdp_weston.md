@@ -1,18 +1,8 @@
-# Bandwidth Usage
+# Windows 11 Issues
 
-## Superposition
+Cursor not working correctly  ~ 100ms delay
+RFX codec not working due to RFXImage not being supported -> High bandwidth usage with Raw/nsc
 
-Not scaling linearly due to codec
+# Possible Solutions:
 
-### NSC
-
-1280x720@15 Around 3MiBps
-
-1280x720@60 Around 9MiBps
-
-
-### RFX 
-
-1280x720@30 Around 3Mibps
-
-1280x720@60 Around 7MiBps
+Scrap completely the weston RDP backend for Xwayland-video-bridge with freerdp-shadow-cli?
