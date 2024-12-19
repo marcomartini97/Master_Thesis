@@ -44,7 +44,9 @@ lxc.cgroup2.devices.allow = c 226:* rwm
 
 When using nvidia, install with --no-kernel-module
 
-Note: new driver is great https://forums.developer.nvidia.com/t/wayland-support-for-the-565-release-series/312688
+Note: new driver is great [https://forums.developer.nvidia.com/t/wayland-support-for-the-565-release-series/312688](https://forums.developer.nvidia.com/t/wayland-support-for-the-565-release-series/312688)
+
+Note: For Vulkan rendering offload on Wayland we need at least driver 545.29.02: [https://www.nvidia.com/en-us/drivers/details/214100/](https://www.nvidia.com/en-us/drivers/details/214100/)
 
 # Docker
 
@@ -63,7 +65,7 @@ But can't do DHCP -> discard for Podman instead
 
 ### DHCP macvlan
 
-https://www.redhat.com/en/blog/leasing-ips-podman
+[https://www.redhat.com/en/blog/leasing-ips-podman](https://www.redhat.com/en/blog/leasing-ips-podman)
 
 Notes:
 
@@ -107,7 +109,7 @@ Error: configure storage: kernel does not support overlay fs: kernel returned un
 
 ## User passthrough
 
-https://pawitp.medium.com/syncing-host-and-container-users-in-docker-39337eff0094
+[https://pawitp.medium.com/syncing-host-and-container-users-in-docker-39337eff0094](https://pawitp.medium.com/syncing-host-and-container-users-in-docker-39337eff0094)
 
 ## Cgroups-v1 to Cgroups-v2
 
