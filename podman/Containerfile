@@ -1,0 +1,29 @@
+FROM fedora:latest
+
+RUN dnf -y update && \
+    dnf -y group install "gnome-desktop" && \
+    dnf -y install dbus-x11 && \
+    dnf clean all
+
+# Copy the keys present in the local folder "vdi" in /etc/
+# (La copia ricorsiva è implicita con "COPY vdi /etc/")
+COPY vdi /etc/vdi
+
+# Copy the compositor start scripts start_gnome.sh setup_grd.sh in /usr/bin/
+COPY start_gnome.sh /usr/bin/
+COPY setup_grd.sh /usr/bin/
+
+RUN chmod +x /usr/bin/start_gnome.sh /usr/bin/setup_grd.sh
+
+# Copy and enable the systemD service
+COPY gnome-vdi-session.service /etc/systemd/system/gnome-vdi-session.service
+
+RUN systemctl enable gnome-vdi-session.service
+
+# Copy the NVIDIA driver (must match the local one)
+COPY NVIDIA-Linux-x86_64*.run /tmp/
+
+RUN chmod +x /tmp/NVIDIA-Linux-x86_64*.run && \
+    /tmp/NVIDIA-Linux-x86_64*.run --no-kernel-modules -s
+
+CMD ["/usr/sbin/init"]
